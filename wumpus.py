@@ -66,66 +66,10 @@
 # cf. 
 
 import random
-
-#game_status="ENCOURS"
-#room_content=[None]*12
-#lanes={0:[1,5,10], 1:[0,2,11], 2:[1,3,6], 3:[2,4,7], 4:[3,5,8], 5:[0,4,9], 6:[2,7,11], 7:[3,6,8], 8:[4,7,9], 9:[5,8,10], 10:[0,9,11], 11:[1,6,10]}
-#player_position=-1
-
-def random_empty_room(player_position, room_content):
-	"""Fonction qui prend en parametre la position du joueur et une liste avec le contenu des salles.
-	Elle renvoie une position aleatoire parmi les salles vides disponibles.
-	"""
-	new_position = random.randint(0,11)
-	while room_content[new_position] != "None" or new_position == player_position:
-		new_position = randomp.randint(0,11)
-	return new_position
+import game
+import rules
+import actions
 	
-def check_adjacent_rooms(player_position, room_content, lanes):
-	"""Fonction qui prend en parametre la position du joueur, une liste avec le contenu des salles et un dictionnaire affectant les salles adjacentes a l index de la salle.
-	Elle affiche, en fonction du contenu de la salle, la phrase correspondante.
-	"""
-	for i in range(len(lanes[palyer_position])):
-		if room_content[lanes[i]] == "bat" :
-			print "Vous entendez un battement d'aile. \n"
-		elif room_content[lanes[i]] == "puit" :
-			print "Vous sentez un courant d'air. \n"
-		elif room_content[lanes[i]] == "wumpus" :
-			print "Vous entendez un ronflement de wumpus endormi \n"
-			
-def check_player_position(player_position, room_content):
-	"""Fonction qui prend en parametre la position du joueur et une liste avec le contenu des salles.
-	Elle renvoie 2 valeurs : un etat du jeu et une position du joueur.
-	Elle verifie les interactions entre le joueur et le contenu de sa salle, et affiche un message d information pour le joueur :
-	- Si bat : on deplace le joueur vers une salle aleatoire et on reverifie les interactions dans cette nouvelle salle (par recursivite) puis on retourne un etat ENCOURS et la position du joueur mise a jour.
-	On de palce la chauve souris vers une case vide aleatoire.
-	- Si puit : renvoie un etat du jeu DEFAITE et la position du joueur mise a jour.
-	- Si wumpus: renvoie un etat du jeu DEFAITE et la position du joueur mise a jour.
-	- Si rien : renvoie un etat du jeu ENCOURS et la position du joueur mise a jour.
-	"""
-	if room_content[player_position] == "bat" :
-		room_content[player_position] = "None"
-		room_content[random_empty_room(player_position, room_content)] = "bat"
-		player_position = random.randint(0,11)
-		print "Une chauve souris vous emporte en case ", player_position, ". \n"
-		return check_player_position(player_position, room_content)
-	elif room_content[player_position] == "puit" :
-		print "Vous êtes tombé dans un puit. \n"
-		return "DEFAITE", player_position
-	elif room_content[player_position] == "wumpus" :
-		print "Miom Miom Miom... Le wumpus vous a dévoré. \n"
-		return "DEFAITE", player_position
-	return "ENCOURS", player_position
-
-def init_game(player_position):
-	return random.randint(0,12)
-	#init tableau contenu
-	#init liaison cases
-	#position du joueur
-	#nombre de fleche
-	#retourne le premier resultat de recherche des adjacents
-	#calcul_machin_autour()
-
 def run():
 	print "*****************************************************************************************************************************"
 	print "*  __   __  __   __  __    _  _______    _______  __   __  _______    _     _  __   __  __   __  _______  __   __  _______  *"
@@ -139,47 +83,61 @@ def run():
 	print "*****************************************************************************************************************************"
 	print "* Bienvenu dans le jeu HUNT THE WUMPUS !"
 	print "* Que voulez-vous faire ? : \n* 1.Jouer\t2.Quitter"
-	jouer_quitter = input("* $> ");
-	if(jouer_quitter == 1):
+
+	option_selected = input("* $> ")
+	while (option_selected != 1 and option_selected != 2):
+		print "* Ce choix n'est pas valide."
+		option_selected = input("* $> ")
+
+	while(option_selected == 1):
 		print "*\n* Jouons !"
 		print "*\n* Histoire blah blah\n* Vous etes cet aventurier et vous vous retrouvez dans ce dedale ou habite un monstre sans pitie..."
 		print "*\n* "
-		#init
-		#status partie
-		game_status = "ENCOURS"
-		#position joueur
-		player_position = -1
-		#player_position = init_game(player_position)
-		player_position = 3
-		#nombre de fleche
-		arrow = 3
-		#remplissage des salles
-		room_content = [None]*12
-		#couloirs
-		lanes = {0:[1,5,10], 1:[0,2,11], 2:[1,3,6], 3:[2,4,7], 4:[3,5,8], 5:[0,4,9], 6:[2,7,11], 7:[3,6,8], 8:[4,7,9], 9:[5,8,10], 10:[0,9,11], 11:[1,6,10]}
 
-		#debut partie
-		while(game_status == "ENCOURS"):
-			print "DEBUG: positionJoueur:"+str(player_position)
-			#On verifie les salles adjacentes et on affiche les messages d info.
-			check_adjacent_rooms(player_position, room_content, lanes)
+		#INIT
+		game.destroy_previous_game()
+		game.init_game()
+		game.toString()
+		
+		while(game.get_game_status() == "RUNNING"):
+
+			print "Vous etes dans la salle ",game.get_player_position(),"."
+
+			print "*       0    "
+  			print "*     / | \  "
+  			print "*   /   6   \ "
+  			print "* 5 _  / \  _ 1"
+  			print "* |   11  7   |"
+  			print "* |   |   |   |"
+  			print "* | _ 10  8 _ |"
+			print "* 4    \ /    2"
+  			print "*   \   9   / "
+  			print "*     \ | /    "
+  			print "*       3      "
+
+
+			rules.check_adjacent_rooms()
+
 			print "* 1.Se Deplacer\n* 2.Tirer une fleche"
-			move_shoot = input("* $> ")
-			if(move_shoot == 1):
-				print "* \n* Vous etes dans la "+str(player_position)+"eme salle, dans quelle salle voulez vous aller ?"
-				salles = lanes[player_position]
-				for i in range (len(salles)):
-					print "* "+str(i+1)+".Salle "+str(salles[i])
-				choix_salle = input("* $> ")
-				player_position = salles[choix_salle-1]
-				#On met a jour l etat du jeu en fonction du contenu de la nouvelle salle dans lequel le joueur arrive (+messages info)
-				game_status, player_position = check_player_position(player_position, room_content)
 
+			action_selected = input("* $> ")
+			while (action_selected != 1 and action_selected != 2):
+				print "* Ce choix n'est pas valide."
+				action_selected = input("* $> ")
 
+			if(action_selected == 1):
+				actions.move()
 
+			elif(action_selected == 2):
+				actions.shoot()				
 
-	else:
-		print "* GRAOAR ! A bientot !"
+		print "* Fin de partie.\n* Voulez-vous rejouer ?\n* 1. Oui\t2. Non"
+		option_selected = input("* $> ")
+		while (option_selected != 1 and option_selected != 2):
+			print "* Ce choix n'est pas valide."
+			option_selected = input("* $> ")
+
+	print "* GRAOAR ! A bientot !"
 
 
 
