@@ -89,4 +89,5 @@ def shooting_result(room_selected):
 
 	# Si le joueur n'a plus de fleche alors qu'il n'a pas tue le wumpus, il a perdu
 	if(game.get_game_status() == "RUNNING" and game.get_arrows() == 0):
+		print "Vous n'avez plus de fleche."
 		game.you_lose()
