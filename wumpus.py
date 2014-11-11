@@ -69,6 +69,7 @@ import random
 import game
 import rules
 import actions
+import os
 	
 def run():
 	print "*****************************************************************************************************************************"
@@ -98,20 +99,22 @@ def run():
 		game.destroy_previous_game()
 		game.init_game()
 		game.toString()
-		
+		os.system("xterm")
+
 		while(game.get_game_status() == "RUNNING"):
 
-			print "Vous etes dans la salle ",game.get_player_position(),"."
+			print "* Vous etes dans la salle ",game.get_player_position(),"."
+			print "* Il vous reste ",game.get_arrows()," fleche(s)."
 
-			print "*       0    "
-  			print "*     / | \  "
-  			print "*   /   6   \ "
+			print "*       0      "
+  			print "*     / | \    "
+  			print "*   /   6   \  "
   			print "* 5 _  / \  _ 1"
   			print "* |   11  7   |"
   			print "* |   |   |   |"
   			print "* | _ 10  8 _ |"
 			print "* 4    \ /    2"
-  			print "*   \   9   / "
+  			print "*   \   9   /  "
   			print "*     \ | /    "
   			print "*       3      "
 

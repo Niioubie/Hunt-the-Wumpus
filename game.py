@@ -44,10 +44,6 @@ def you_lose():
 	game['game_status'] = "DEFEATE"
 	print "Vous avez perdu."
 
-def new_game():
-	game['game_status'] = "RUNNING"
-
-
 #FUNCTIONS
 def random_empty_room():
 	"""Fonction qui prend en parametre la position du joueur et une liste avec le contenu des salles.

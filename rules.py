@@ -58,13 +58,11 @@ def check_player_position():
 
 	elif game.get_room_content( game.get_player_position() ) == "cave" :
 		#
-		#print "You felt into the cave. NOOOOOoooooooo...."
 		print "Vous etes tombe dans un puit..."
 		game.you_lose()
 
 	elif game.get_room_content( game.get_player_position() ) == "wumpus" :
 		#
-		#print "Om nom nom nom... You have been eat by the terrible Wumpus. \n"
 		print "Miom miom miom... Vous avez ete devore par le terrible Wumpus!"
 		game.you_lose()
 
@@ -89,6 +87,6 @@ def shooting_result(room_selected):
 	else :
 		print "Rien ne se passe..."
 
-	#si oui
-		#check si on touche le wumpus
-		#sinon le wumpus se deplace
+	# Si le joueur n'a plus de fleche alors qu'il n'a pas tue le wumpus, il a perdu
+	if(game.get_game_status() == "RUNNING" and game.get_arrows() == 0):
+		game.you_lose()
