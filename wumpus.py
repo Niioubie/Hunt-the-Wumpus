@@ -129,7 +129,7 @@ def run():
 				actions.move()
 
 			elif(action_selected == 2):
-				actions.shoot()				
+				actions.shoot()
 
 		print "* Fin de partie.\n* Voulez-vous rejouer ?\n* 1. Oui\t2. Non"
 		option_selected = input("* $> ")
