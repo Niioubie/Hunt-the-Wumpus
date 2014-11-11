@@ -69,7 +69,6 @@ import random
 import game
 import rules
 import actions
-import os
 	
 def run():
 	print "*****************************************************************************************************************************"
@@ -83,28 +82,30 @@ def run():
 	print "*                                                                                                                           *"
 	print "*****************************************************************************************************************************"
 	print "* Bienvenu dans le jeu HUNT THE WUMPUS !"
-	print "* Que voulez-vous faire ? : \n* 1.Jouer\t2.Quitter"
+	print "* Que voulez-vous faire ? \n* 1. Jouer\t2. Quitter"
 
-	option_selected = input("* $> ")
+	option_selected = 0
 	while (option_selected != 1 and option_selected != 2):
-		print "* Ce choix n'est pas valide."
-		option_selected = input("* $> ")
+		try:
+			option_selected = int(raw_input("* $> "))
+			if(option_selected != 1 and option_selected != 2):
+				print "* Ce choix n'est pas valide."
+
+		except ValueError:
+			print "* Ce choix n'est pas valide."
+
 
 	while(option_selected == 1):
 		print "*\n* Jouons !"
 		print "*\n* Histoire blah blah\n* Vous etes cet aventurier et vous vous retrouvez dans ce dedale ou habite un monstre sans pitie..."
-		print "*\n* "
+		print "* "
 
 		#INIT
 		game.destroy_previous_game()
 		game.init_game()
-		game.toString()
-		os.system("xterm")
+		#DEBUG : game.toString()
 
 		while(game.get_game_status() == "RUNNING"):
-
-			print "* Vous etes dans la salle ",game.get_player_position(),"."
-			print "* Il vous reste ",game.get_arrows()," fleche(s)."
 
 			print "*       0      "
   			print "*     / | \    "
@@ -118,15 +119,22 @@ def run():
   			print "*     \ | /    "
   			print "*       3      "
 
+			print "* Vous etes dans la salle ",game.get_player_position(),"."
+			print "* Il vous reste ",game.get_arrows()," fleche(s)."
 
 			rules.check_adjacent_rooms()
 
-			print "* 1.Se Deplacer\n* 2.Tirer une fleche"
+			print "* Que voulez-vous faire ? \n* 1. Se Deplacer\n* 2. Tirer une fleche"
 
-			action_selected = input("* $> ")
+			action_selected = 0
 			while (action_selected != 1 and action_selected != 2):
-				print "* Ce choix n'est pas valide."
-				action_selected = input("* $> ")
+				try:
+					action_selected = int(raw_input("* $> "))
+					if(action_selected != 1 and action_selected != 2):
+						print "* Ce choix n'est pas valide."
+
+				except ValueError:
+					print "* Ce choix n'est pas valide."
 
 			if(action_selected == 1):
 				actions.move()
@@ -135,10 +143,15 @@ def run():
 				actions.shoot()
 
 		print "* Fin de partie.\n* Voulez-vous rejouer ?\n* 1. Oui\t2. Non"
-		option_selected = input("* $> ")
+		option_selected = 0
 		while (option_selected != 1 and option_selected != 2):
-			print "* Ce choix n'est pas valide."
-			option_selected = input("* $> ")
+			try:
+				option_selected = int(raw_input("* $> "))
+				if(option_selected != 1 and option_selected != 2):
+					print "* Ce choix n'est pas valide."
+
+			except ValueError:
+				print "* Ce choix n'est pas valide."
 
 	print "* GRAOAR ! A bientot !"
 

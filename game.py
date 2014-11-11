@@ -38,11 +38,11 @@ def decrease_arrows():
 
 def you_win():
 	game['game_status'] = "VICTORY"
-	print "Vous avez vaincu le Wumpus."
+	print "* Vous avez vaincu le Wumpus."
 
 def you_lose():
 	game['game_status'] = "DEFEATE"
-	print "Vous avez perdu."
+	print "* Vous avez perdu."
 
 #FUNCTIONS
 def random_empty_room():

@@ -10,10 +10,15 @@ def move():
 		print "* "+str(i+1)+". Salle "+str(game.get_lanes( game.get_player_position() )[i])
 	print "*\n* 4. Annuler"
 
-	room_selected = input("* $> ")
+	room_selected = 0
 	while (room_selected != 1 and room_selected != 2 and room_selected != 3 and room_selected != 4):
-		print "Ce choix n'est pas valide."
-		room_selected = input("* $> ")
+		try:
+			room_selected = int(raw_input("* $> "))
+			if(room_selected != 1 and room_selected != 2 and room_selected != 3 and room_selected != 4):
+				print "* Ce choix n'est pas valide."
+
+		except ValueError:
+			print "* Ce choix n'est pas valide."
 
 	if(room_selected != 4):
 		game.set_player_position( ( ( game.get_lanes( game.get_player_position() ) ) )[room_selected-1] )
@@ -28,12 +33,17 @@ def shoot():
 		print "* "+str(i+1)+". Salle "+str(game.get_lanes( game.get_player_position() )[i])
 	print "*\n* 4. Annuler"
 
-	room_selected = input("* $> ")
+	room_selected = 0
 	while (room_selected != 1 and room_selected != 2 and room_selected != 3 and room_selected != 4):
-		print "Ce choix n'est pas valide."
-		room_selected = input("* $> ")
+		try:
+			room_selected = int(raw_input("* $> "))
+			if(room_selected != 1 and room_selected != 2 and room_selected != 3 and room_selected != 4):
+				print "* Ce choix n'est pas valide."
+
+		except ValueError:
+			print "* Ce choix n'est pas valide."
 
 	if(room_selected != 4):
 		game.decrease_arrows()
 		rules.shooting_result(game.get_lanes( game.get_player_position() )[room_selected-1])
-		game.toString()
+		#DEBUG : game.toString()
