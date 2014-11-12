@@ -1,9 +1,8 @@
-#game.py [[][][][][][][][][][][][]]
-
 #TODO recommenter
 
 import random
 
+#CONSTANTES
 BAT_NUMBER = 2
 CAVE_NUMBER = 2
 WUMPUS_NUMBER = 1
@@ -11,7 +10,7 @@ ROOM_NUMBER = 12
 
 game = {'game_status':None, 'player_position':0, 'arrows':0, 'lanes':[], 'room_content':[]}
 
-# ACCESSORS
+#ACCESSEURS
 def get_game_status():
 	return game['game_status']
 
@@ -44,11 +43,9 @@ def you_lose():
 	game['game_status'] = "DEFEATE"
 	print "* Vous avez perdu."
 
-#FUNCTIONS
+#FONCTIONS
+"""Cette fonction permet de trouver et de retourner une salle vide aleatoire dans le plateau"""
 def random_empty_room():
-	"""Fonction qui prend en parametre la position du joueur et une liste avec le contenu des salles.
-	Elle renvoie une position aleatoire parmi les salles vides disponibles.
-	"""
 	new_position = random.randint(0,11)
 
 	while get_room_content(new_position) != None or new_position == get_player_position():
@@ -56,6 +53,7 @@ def random_empty_room():
 
 	return new_position
 
+"""Cette fonction permet de trouver et de retourner une salle vide aleatoire parmis celles adjacentes a la salle passee en parametre"""
 def random_adjacent_empty_room(room):
 	new_position = random.randint(0,2)
 
@@ -64,6 +62,11 @@ def random_adjacent_empty_room(room):
 
 	return (get_lanes(room))[new_position]
 
+"""Fonction d'affichage du contenu du plateau"""
+def toString():
+	print "Room content : "
+	for i in range ( len( game['room_content'] ) ):
+		print "\t",i," : ", get_room_content(i)
 
 #INIT GAME
 def init_game_status():
@@ -105,8 +108,3 @@ def init_game():
 def destroy_previous_game():
 	game['lanes'] = []
 	game['room_content'] = []
-
-def toString():
-	print "Room content : "
-	for i in range ( len( game['room_content'] ) ):
-		print "\t",i," : ", get_room_content(i)

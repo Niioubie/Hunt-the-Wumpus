@@ -84,6 +84,7 @@ def run():
 	print "* Bienvenu dans le jeu HUNT THE WUMPUS !"
 	print "* Que voulez-vous faire ? \n* 1. Jouer\t2. Quitter"
 
+	#Recuperation du choix du joueur
 	option_selected = 0
 	while (option_selected != 1 and option_selected != 2):
 		try:
@@ -94,17 +95,17 @@ def run():
 		except ValueError:
 			print "* Ce choix n'est pas valide."
 
-
+	#Debut partie
 	while(option_selected == 1):
 		print "*\n* Jouons !"
 		print "*\n* Histoire blah blah\n* Vous etes cet aventurier et vous vous retrouvez dans ce dedale ou habite un monstre sans pitie..."
 		print "* "
 
-		#INIT
+		#Initialisation du jeu
 		game.destroy_previous_game()
 		game.init_game()
-		#DEBUG : game.toString()
 
+		#Boucle principale du jeu
 		while(game.get_game_status() == "RUNNING"):
 
 			print "*       0      "
@@ -122,10 +123,12 @@ def run():
 			print "* Vous etes dans la salle ",game.get_player_position(),"."
 			print "* Il vous reste ",game.get_arrows()," fleche(s)."
 
+			#Verification du contenu des salles adjacentes
 			rules.check_adjacent_rooms()
 
 			print "* Que voulez-vous faire ? \n* 1. Se Deplacer\n* 2. Tirer une fleche"
 
+			#Recuperation du choix du joueur
 			action_selected = 0
 			while (action_selected != 1 and action_selected != 2):
 				try:
@@ -136,13 +139,16 @@ def run():
 				except ValueError:
 					print "* Ce choix n'est pas valide."
 
+			#Deplacement
 			if(action_selected == 1):
 				actions.move()
 
+			#Tire
 			elif(action_selected == 2):
 				actions.shoot()
 
 		print "* Fin de partie.\n* Voulez-vous rejouer ?\n* 1. Oui\t2. Non"
+		#Recuperation du choix du joueur
 		option_selected = 0
 		while (option_selected != 1 and option_selected != 2):
 			try:
@@ -153,13 +159,14 @@ def run():
 			except ValueError:
 				print "* Ce choix n'est pas valide."
 
+	#Fin du jeu
 	print "* GRAOAR ! A bientot !"
 
 
 
 
 
-
+#Lancement du jeu
 run()
 
 
