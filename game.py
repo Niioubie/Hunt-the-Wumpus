@@ -1,4 +1,4 @@
-#TODO recommenter
+#game.py
 
 import random
 

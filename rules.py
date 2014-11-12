@@ -1,8 +1,5 @@
 #rules.py
 
-#TODO recommenter
-#TODO switch case
-
 import random
 import game
 
